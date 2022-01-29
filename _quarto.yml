@@ -1,0 +1,39 @@
+
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "ESG"
+  navbar:
+    search: true
+    collapse: false
+    left:
+      - text: "Preprints"
+        file: preprints.qmd
+      - text: "Media"
+        menu:
+        - blogs.qmd
+        - podcasts.qmd
+        - videos.qmd
+        - social-feeds.qmd
+      - text: "Guidelines"
+        menu:
+        - policies.qmd
+        - standards.qmd
+        - esgindex.qmd
+      - text: "Events"
+        file: events.qmd
+      - text: "Career"
+        menu:
+        - jobs.qmd
+        - training.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+editor: visual
+

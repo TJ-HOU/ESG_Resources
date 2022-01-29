@@ -1,0 +1,11 @@
+---
+title: "Events"
+---
+
+```{r echo=FALSE, results='asis'}
+library(DT)
+library("readxl")
+event<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "events")
+event$Date <- format(as.Date(as.character(event$Date)), "%Y-%m-%d")
+datatable(event, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+```

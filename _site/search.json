@@ -1,0 +1,114 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "About",
+    "section": "",
+    "text": "This is a website that hosts Environmental, Social, Governance (ESG) resources created by Quarto package."
+  },
+  {
+    "objectID": "events.html",
+    "href": "events.html",
+    "title": "Code",
+    "section": "",
+    "text": "Name\nDescription\nCategory\nURL\nStars\nContributors\nForks\nCreated\n\n\n\n\nESG-BERT\nDomain Specific BERT Model for Text Mining in Sustainable Investing\nText Mining\nhttps://github.com/mukut03/ESG-BERT\n44\n3\n19\n2021/05/30\n\n\nESG_AI\nWe aim to make ESG scoring an automatic, data-driven process. We leverage the GDelt news source to ingest historical and real-time news articles, tweets, and other digital publications that we classify into the three ESG categories.\nESG Scoring\nhttps://github.com/hannahawalsh/ESG_AI\n12\n4\n18\n2021/01/27"
+  },
+  {
+    "objectID": "code.html",
+    "href": "code.html",
+    "title": "Code",
+    "section": "",
+    "text": "Name\nDescription\nCategory\nURL\nStars\nContributors\nForks\nCreated\n\n\n\n\nESG-BERT\nDomain Specific BERT Model for Text Mining in Sustainable Investing\nText Mining\nhttps://github.com/mukut03/ESG-BERT\n44\n3\n19\n2021/05/30\n\n\nESG_AI\nWe aim to make ESG scoring an automatic, data-driven process. We leverage the GDelt news source to ingest historical and real-time news articles, tweets, and other digital publications that we classify into the three ESG categories.\nESG Scoring\nhttps://github.com/hannahawalsh/ESG_AI\n12\n4\n18\n2021/01/27"
+  },
+  {
+    "objectID": "academic.html",
+    "href": "academic.html",
+    "title": "Academic Articles",
+    "section": "",
+    "text": "Organized by sources\n\n\nArXivIDEASSSRN"
+  },
+  {
+    "objectID": "academic.html#arxiv",
+    "href": "academic.html#arxiv",
+    "title": "Academic Publication",
+    "section": "ArXiv",
+    "text": "ArXiv\n\n\n\nTitle\nAuthor\nCategory\nURL\nDate Published\n\n\n\n\nESG features explain one bit of idiosyncratic price returns\nJérémi Assael, Laurent Carlier, Damien Challet\nq-fin.PM, q-fin.RM\nhttps://arxiv.org/abs/2201.04393\n2022/01/12\n\n\nESG and Sovereign Risk: What is Priced in by the Bond Market and Credit Rating Agencies?\nRaphaël Semet, Thierry Roncalli, Lauren Stagnol\nq-fin.PR, econ.GN\nhttps://arxiv.org/abs/2110.06617\n2021/10/13"
+  },
+  {
+    "objectID": "academic.html#repec",
+    "href": "academic.html#repec",
+    "title": "Academic Publication",
+    "section": "RePEc",
+    "text": "RePEc\nImpact of ESG"
+  },
+  {
+    "objectID": "academic.html#ssrn",
+    "href": "academic.html#ssrn",
+    "title": "Academic Publication",
+    "section": "SSRN",
+    "text": "SSRN\nESG credibility"
+  },
+  {
+    "objectID": "non-academic.html",
+    "href": "non-academic.html",
+    "title": "Non-academic Publication",
+    "section": "",
+    "text": "Organized by publication type\n\n\nBlogsPapersBooksMagazines"
+  },
+  {
+    "objectID": "podcasts.html",
+    "href": "podcasts.html",
+    "title": "Podcasts",
+    "section": "",
+    "text": "Organized by host type"
+  },
+  {
+    "objectID": "podcasts.html#news",
+    "href": "podcasts.html#news",
+    "title": "Podcasts",
+    "section": "News",
+    "text": "News\n\n\n\nTitle\nDate\nOrganization\n\n\n\n\n5 - Inside ESG: A sceptic vs a believer, our experts face off | Behind the Money on Acast\n2021/11/03\nFinancial Times\n\n\n4 - Inside ESG: Sustainable finance and the threat to divest | Behind the Money on Acast\n2021/10/20\nFinancial Times"
+  },
+  {
+    "objectID": "podcasts.html#ngonpo",
+    "href": "podcasts.html#ngonpo",
+    "title": "Podcasts",
+    "section": "NGO/NPO",
+    "text": "NGO/NPO\n\n\n\nTitle\nDate\nOrganization\n\n\n\n\nForget Naughty or Nice – Santa’s Workshops are Flooding - MSCI\n2022/01/21\nMSCI\n\n\nRBS International ‘A Just Transition’ Podcast Series: Episode 5: The relationship between the E and the S on Apple Podcasts\n2021/12/17\nRBS"
+  },
+  {
+    "objectID": "podcasts.html#individuals",
+    "href": "podcasts.html#individuals",
+    "title": "Podcasts",
+    "section": "Individuals",
+    "text": "Individuals\n\n\n\nTitle\nDate\nOrganization\n\n\n\n\nForget Naughty or Nice – Santa’s Workshops are Flooding - MSCI\n2022/01/21\nMSCI\n\n\nRBS International ‘A Just Transition’ Podcast Series: Episode 5: The relationship between the E and the S on Apple Podcasts\n2021/12/17\nRBS\n\n\n\n:::"
+  },
+  {
+    "objectID": "social-feeds.html",
+    "href": "social-feeds.html",
+    "title": "Social Feeds",
+    "section": "",
+    "text": "TwitterLinkedinReddit"
+  },
+  {
+    "objectID": "policies.html",
+    "href": "policies.html",
+    "title": "Policies & Regulations",
+    "section": "",
+    "text": "Policies & RegulationsGovernance CodesGuidance"
+  },
+  {
+    "objectID": "preprints.html",
+    "href": "preprints.html",
+    "title": "Preprints",
+    "section": "",
+    "text": "ArXivIDEASSSRN"
+  }
+]

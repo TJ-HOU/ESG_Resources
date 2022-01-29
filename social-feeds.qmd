@@ -1,0 +1,31 @@
+---
+title: "Social Feeds"
+---
+
+::: panel-tabset
+## Twitter
+
+```{r echo=FALSE, results='asis'}
+library(DT)
+library("readxl")
+twitter<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "twitter")
+twitter$Date <- format(as.Date(as.character(twitter$Date)), "%Y-%m-%d")
+datatable(twitter, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+```
+
+## Linkedin
+
+```{r echo=FALSE, results='asis'}
+linkedin<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "linkedin")
+linkedin$Date <- format(as.Date(as.character(linkedin$Date)), "%Y-%m-%d")
+datatable(linkedin, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+```
+
+## Reddit
+
+```{r echo=FALSE, results='asis'}
+reddit<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "reddit")
+reddit$Date <- format(as.Date(as.character(reddit$Date)), "%Y-%m-%d")
+datatable(reddit, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+```
+:::

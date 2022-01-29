@@ -1,0 +1,30 @@
+---
+title: "Preprints"
+---
+
+::: panel-tabset
+## ArXiv
+
+```{r echo=FALSE, results='asis'}
+library(DT)
+library("readxl")
+arxiv<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "arxiv")
+arxiv$`Date Submitted` <- format(as.Date(as.character(arxiv$`Date Submitted`)), "%Y-%m-%d")
+datatable(arxiv, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+```
+
+## IDEAS
+
+```{r echo=FALSE, results='asis'}
+ideas<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "ideas")
+datatable(ideas, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+```
+
+## SSRN
+
+```{r echo=FALSE, results='asis'}
+ssrn<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "ssrn")
+ssrn$`Date Posted` <- format(as.Date(as.character(ssrn$`Date Posted`)), "%Y-%m-%d")
+datatable(ssrn, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+```
+:::

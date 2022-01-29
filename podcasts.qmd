@@ -1,0 +1,11 @@
+---
+title: "Podcasts"
+---
+
+```{r echo=FALSE, results='asis'}
+library(DT)
+library("readxl")
+podcast<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "podcasts")
+podcast$Date <- format(as.Date(as.character(podcast$Date)), "%Y-%m-%d")
+datatable(podcast, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+```

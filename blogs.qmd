@@ -1,0 +1,11 @@
+---
+title: "Blogs"
+---
+
+```{r echo=FALSE, results='asis'}
+library(DT)
+library("readxl")
+blog<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "blogs")
+blog$Date <- format(as.Date(as.character(blog$Date)), "%Y-%m-%d")
+datatable(blog, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+```

@@ -1,0 +1,10 @@
+---
+title: "Training"
+---
+
+```{r echo=FALSE, results='asis'}
+library(DT)
+library("readxl")
+training<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "training")
+datatable(training, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+```

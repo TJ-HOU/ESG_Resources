@@ -1,0 +1,5 @@
+---
+title: "About"
+---
+
+This is a website that hosts Environmental, Social, Governance (ESG) resources created by Quarto package.

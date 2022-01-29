@@ -1,0 +1,11 @@
+---
+title: "Videos"
+---
+
+```{r echo=FALSE, results='asis'}
+library(DT)
+library("readxl")
+video<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "videos")
+video$Date <- format(as.Date(as.character(video$Date)), "%Y-%m-%d")
+datatable(video, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+```
