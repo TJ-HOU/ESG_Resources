@@ -3,9 +3,63 @@ title: "Blogs"
 ---
 
 ```{r echo=FALSE, results='asis'}
+# blogs from pri
+library(rvest)
+library(stringr)
+base_url<-"https://www.unpri.org/searchresults?qkeyword=&PageSize=10&parametrics=WVPUBDATE%7C%5BNOW-365DAY%20TO%20NOW%5D%2CWVSECTIONCODE%7C1024&cmd=GoToPage&val="
+pri_blogs_fun<-function(url){
+  raw<-read_html(url)
+  # title
+  nodes<-raw%>%html_elements("h3 a")
+  urltext<-nodes%>%html_text(nodes)
+  title<-paste0("<a href=", html_attr(nodes, "href"),">",urltext,"</a>")
+  # date
+  date<-raw%>%html_nodes("p span")
+  date<-sub("^[^}]*", "", date)
+  date<-substr(date,4, 13)
+  date<-date[date != ""]
+  date<-noquote(date)
+  # create pri dataframe
+  res <- data.frame(title,date)
+  res$organization <- 'UNPRI'
+  return (res)
+}
+# loop over pages
+i=1
+tgt_url<- paste0(base_url,i)
+x<-read_html(tgt_url)%>%html_nodes("h3 a")%>%html_text2()
+pri_blogs_temp<-pri_blogs_fun(tgt_url)
+pri_blogs<-data.frame()
+while(!identical(x, character(0))){
+  Sys.sleep(10)
+  pri_blogs_temp<-pri_blogs_fun(tgt_url)
+  pri_blogs<-rbind(pri_blogs,pri_blogs_temp)
+  i=i+1
+  tgt_url<- paste0(base_url,i)
+  x<-read_html(tgt_url)%>%html_nodes("h3 a")%>%html_text2()
+}
+```
+
+```{r echo=FALSE, results='asis'}
+# CDP blogs
+cdp.raw<-read_html("https://www.cdp.net/en/blog/")
+# date
+date<-cdp.raw%>%html_nodes(".article__type")%>%html_text2()
+date<-sub("^[^-]*", "", date)
+date<-gsub("^.{0,2}", "",date)
+date<-noquote(date)
+# title
+nodes<-cdp.raw%>%html_nodes(".st_channel__post>a")
+urltext<-cdp.raw%>%html_nodes(".article__title")%>%html_text2()
+urltext<-noquote(urltext)
+title<-paste0("<a href=", html_attr(nodes,"href"),">",urltext,"</a>")
+# create pri dataframe
+cdp_blogs <- data.frame(title,date)
+cdp_blogs$organization <- 'CDP'
+```
+
+```{r echo=FALSE, results='asis'}
 library(DT)
-library("readxl")
-blog<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "blogs")
-blog$Date <- format(as.Date(as.character(blog$Date)), "%Y-%m-%d")
-datatable(blog, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+blogs<-rbind(pri_blogs,cdp_blogs)
+datatable(blogs, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
 ```

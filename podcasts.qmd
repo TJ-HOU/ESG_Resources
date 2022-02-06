@@ -3,9 +3,37 @@ title: "Podcasts"
 ---
 
 ```{r echo=FALSE, results='asis'}
+library(rvest)
+library(stringr)
+apple_podcast_fun<-function(url){
+  raw<-read_html(url)
+  # title
+  nodes<-raw%>%html_elements(".tracks__track__link--block")
+  urltext<-nodes%>%html_text2()
+  title<-paste0("<a href=", html_attr(nodes, "href"),">",urltext,"</a>")
+  # date
+  date<-raw%>%html_elements("time")%>%html_text2()
+  date<-date[!str_detect(date,pattern="/")]
+  # create dataframe
+  res <- data.frame(title,date)
+  return (res)
+}
+# msci podcasts
+msci_podcasts<-apple_podcast_fun("https://podcasts.apple.com/gb/podcast/esg-now/id1434009128")
+msci_podcasts$organization<-"MSCI"
+# cfa podcasts
+cfa_podcasts<-apple_podcast_fun("https://podcasts.apple.com/us/podcast/the-sustainability-story/id1581786457")
+cfa_podcasts$organization<-"CFA"
+# sp500 podcasts
+sp_podcasts<-apple_podcast_fun("https://podcasts.apple.com/us/podcast/esg-insider-a-podcast-from-s-p-global/id1475521006")
+sp_podcasts$organization<-"SP Global"
+# brunswick podcasts
+brunswick_podcasts<-apple_podcast_fun("https://podcasts.apple.com/us/podcast/the-esg-agenda/id1519110197")
+brunswick_podcasts$organization<-"Brunswick"
+```
+
+```{r echo=FALSE, results='asis'}
 library(DT)
-library("readxl")
-podcast<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "podcasts")
-podcast$Date <- format(as.Date(as.character(podcast$Date)), "%Y-%m-%d")
-datatable(podcast, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+podcasts<-rbind(msci_podcasts,cfa_podcasts,sp_podcasts,brunswick_podcasts)
+datatable(podcasts, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```

@@ -3,9 +3,86 @@ title: "Events"
 ---
 
 ```{r echo=FALSE, results='asis'}
+# events from pri
+library(rvest)
+library(stringr)
+base_url<-"https://www.unpri.org/searchresults?qkeyword=&PageSize=10&parametrics=WVSECTIONCODE%7C1015&cmd=AddPm&val=WVPUBDATE%7C%5BNOW-365DAY%20TO%20NOW%5D"
+pri.raw<-read_html(base_url)
+# title
+nodes<-pri.raw%>%html_elements("h3 a")
+urltext<-nodes%>%html_text(nodes)
+title<-paste0("<a href=", html_attr(nodes, "href"),">",urltext,"</a>")
+# date and location
+date_location<-pri.raw%>%html_nodes("#content_sleeve p")%>%html_text2()
+date<-word(date_location,1,sep = "\\|")
+location<-word(date_location,2,sep = "\\|")
+date<-noquote(date)
+location<-noquote(location)
+# create pri dataframe
+pri <- data.frame(title,date,location)
+pri$organization <- 'UNPRI'
+pri_events_fun<-function(url){
+  raw<-read_html(url)
+  # title
+  nodes<-raw%>%html_elements("h3 a")
+  urltext<-nodes%>%html_text(nodes)
+  title<-paste0("<a href=", html_attr(nodes, "href"),">",urltext,"</a>")
+  # date and location
+  date_location<-raw%>%html_nodes("#content_sleeve p")%>%html_text2()
+  date<-word(date_location,1,sep = "\\|")
+  location<-word(date_location,2,sep = "\\|")
+  date<-noquote(date)
+  location<-noquote(location)
+  # create pri dataframe
+  res <- data.frame(title,date,location)
+  res$organization <- 'UNPRI'
+  return (res)
+}
+pri_events<-pri_events_fun(base_url)
+# loop over pages
+i=1
+tgt_url<- paste0(base_url,"&np=",i)
+x<-read_html(tgt_url)%>%html_elements("#content-block .list-group-item")%>%html_text2()
+while(!identical(x, character(0))){
+  Sys.sleep(10)
+  idea_temp<-ideas_fun(tgt_url)
+  ideas<-rbind(ideas,idea_temp)
+  i=i+1
+  tgt_url<- paste0(base_url,"&np=",i)
+  x<-read_html(tgt_url)%>%html_elements("#content-block .list-group-item")%>%html_text2()
+}
+```
+
+```{r echo=FALSE, results='asis'}
+# events from gri
+gri.raw<-read_html("https://www.globalreporting.org/reporting-support/events/")
+content<-gri.raw%>%html_table()
+gri.table<-content[[1]]
+gri_events<-gri.table[,c("Event","Date","Location","Organisation")]
+names(gri_events) <- c('title','date','location','organization')
+```
+
+```{r echo=FALSE, results='asis'}
+library(rvest)
+# events from ssf
+ssf.raw<-read_html("https://www.sustainablefinance.ch/en/sustainable-finance-event-calendar-_content---1--1056.html")
+# title
+nodes<-ssf.raw%>%html_element(".skytableevencol a")
+urltext<-nodes%>%html_text2()
+title<-paste0("<a href=", html_attr(nodes, "href"),">",urltext,"</a>")
+# date
+date<-ssf.raw%>%html_nodes(".skytableevenrow .skytablecol1")%>%html_text2()
+date<-noquote(date)
+# location
+location<-ssf.raw%>%html_nodes(".skytableevenrow .skytablelastcol")%>%html_text2()
+location<-noquote(location)
+# create ssf dataframe
+ssf_events<- data.frame(title,date,location)
+ssf_events$organization <- 'SSF'
+```
+
+```{r echo=FALSE, results='asis'}
 library(DT)
-library("readxl")
-event<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "events")
-event$Date <- format(as.Date(as.character(event$Date)), "%Y-%m-%d")
-datatable(event, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+events<-rbind(pri_events,gri_events,ssf_events)
+datatable(events, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
 ```
