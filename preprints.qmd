@@ -26,7 +26,7 @@ date<-noquote(date)
 # create arxiv dataframe
 arxiv <- data.frame(title,author,date)
 library(DT)
-datatable(arxiv, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+datatable(arxiv, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
 
 ## IDEAS
@@ -66,32 +66,42 @@ while(!identical(x, character(0))){
   x<-read_html(tgt_url)%>%html_elements("#content-block .list-group-item")%>%html_text2()
 }
 library(DT)
-datatable(ideas, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+datatable(ideas, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
 
 ## SSRN
 
-```{r echo=FALSE, results='asis'}
+```{r echo=FALSE, results='asis',message=FALSE}
 library(rvest)
+library(DT)
+library(tidyverse)
 ssrn_fun<-function(url){
   raw<-read_html(url)
-  # title
+  # remove duplicate entry
   nodes<-raw%>%html_elements(".optClickTitle")
   urltext<-nodes%>%html_text(nodes)
-  title<-paste0("<a href=", html_attr(nodes, "href"),">",urltext,"</a>")
-  # author
-  #author<-raw%>%html_elements(".authors-list a")%>%html_text2()
-  #author<-noquote(author)
-  # date
+  urltext<-gsub("\r", "", urltext)
+  url<-html_attr(nodes, "href")
   date<-raw%>%html_elements(".note-list span:nth-child(2)")%>%html_text2()
   date<- gsub("^.{0,8}", "", date)
   date<-noquote(date)
-  # create ideas dataframe
-  res<-data.frame(title,date)
-  return (res)
+  # dataframe
+  res<-data.frame(urltext,url,date)
+  res_df<-res%>%
+    mutate(duplicate=tolower(urltext))%>%
+    distinct(duplicate,.keep_all=TRUE)%>%
+    select(-duplicate)
+  # add author
+  author<-raw%>%html_nodes(".authors-list")%>%html_text2()
+  author<-noquote(author)
+  author<- gsub("\r", "", author)
+  res_df$author<-author
+  res_df$title<-paste0("<a href=", res_df$url,">",res_df$urltext,"</a>")
+  res_df<- res_df%>%select(title, author,date)
+  return (res_df)
 }
 ssrn<-ssrn_fun("https://papers.ssrn.com/sol3/JELJOUR_Results.cfm?form_name=journalBrowse&journal_id=235330&Network=yes&lim=false&orderBy=ab_approval_date&orderDir=desc&strSelectedOption=6")
-library(DT)
-datatable(ssrn, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+
+datatable(ssrn, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
 :::

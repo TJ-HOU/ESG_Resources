@@ -2,10 +2,18 @@
 title: "Policies & Regulations"
 ---
 
-```{r echo=FALSE, results='asis'}
+```{r echo=FALSE, message=FALSE, results='asis'}
+# LBS CCG
+library(rvest)
+library(dplyr)
 library(DT)
-library("readxl")
-policy<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "policies")
-datatable(policy, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+codes.raw<-read_html("https://www.london.edu/faculty-and-research/centre-for-corporate-governance/governance-and-policies")
+# title
+nodes<-codes.raw%>%html_elements(".text-placeholder a , .rich-text a")
+urltext<-nodes%>%html_text2()
+title<-paste0("<a href=",html_attr(nodes, "href"),">",urltext,"</a>")
+ccg_codes<-data.frame(title)
+ccg_codes$source<-"Center for Corporate Governance, London Business School"
+datatable(ccg_codes, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
 

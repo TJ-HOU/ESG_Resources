@@ -23,9 +23,16 @@ datatable(linkedin, options = list(pageLength = 5),escape=FALSE, class = 'cell-b
 
 ## Reddit
 
-```{r echo=FALSE, results='asis'}
-reddit<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "reddit")
-reddit$Date <- format(as.Date(as.character(reddit$Date)), "%Y-%m-%d")
-datatable(reddit, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+```{r echo=FALSE,message=FALSE,warning=FALSE,results='asis'}
+#devtools::install_version("RedditExtractoR", version = "2.1.5", repos = "http://cran.us.r-project.org")
+#install.packages("igraph")
+library(RedditExtractoR)
+library(tidyverse)
+library(DT)
+reddit_raw <- get_reddit(search_terms ="ESG")
+reddit_raw$title_new<-paste0("<a href=",reddit_raw$URL,">",reddit_raw$title,"</a>")
+reddit_select<-reddit_raw%>%select(title_new,post_date,num_comments,post_score,link)%>%distinct()
+colnames(reddit_select) <- c("Post","Post Date","# of comments","Post Score","External Link")
+datatable(reddit_select, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
 :::
