@@ -10,5 +10,3 @@ job$`Post Date` <- format(as.Date(as.character(job$`Post Date`)), "%Y-%m-%d")
 job$`Closing Date` <- format(as.Date(as.character(job$`Closing Date`)), "%Y-%m-%d")
 datatable(job, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
 ```
-
-

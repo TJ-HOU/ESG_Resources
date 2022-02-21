@@ -28,7 +28,6 @@ pri_blogs_fun<-function(url){
 i=1
 tgt_url<- paste0(base_url,i)
 x<-read_html(tgt_url)%>%html_nodes("h3 a")%>%html_text2()
-pri_blogs_temp<-pri_blogs_fun(tgt_url)
 pri_blogs<-data.frame()
 while(!identical(x, character(0))){
   Sys.sleep(10)
@@ -61,5 +60,5 @@ cdp_blogs$organization <- 'CDP'
 ```{r echo=FALSE, results='asis'}
 library(DT)
 blogs<-rbind(pri_blogs,cdp_blogs)
-datatable(blogs, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+datatable(blogs, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```

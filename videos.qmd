@@ -7,13 +7,9 @@ title: "Videos"
 library(tuber)
 library(tidyverse)
 library(keyring)
-options(warn=-1)
-#app_id<-key_get("youtubeid","thou40")
-#app_secret <-key_get("youtubesecret","thou40")
-#key<-key_get("youtubetoken","thou40")
-app_id<-"517026715510-krtcf2lndf677gitg851j3obnfsv5eca.apps.googleusercontent.com"
-app_secret<-"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"
-key<-"AIzaSyAfAvTLxDSnpNZ3QoUxY3eeG5BKUi9pUvs" 
+app_id<-key_get("youtubeid","thou40")
+app_secret <-key_get("youtubesecret","thou40")
+key<-key_get("youtubetoken","thou40")
 yt_oauth(app_id, app_secret,token=key)
 youtube<-yt_search("esg investing",published_after = "2021-02-13T00:00:00Z")
 youtube$url<-paste0("<a href=https://www.youtube.com/watch?v=",youtube$video_id,">",youtube$title,"</a>")

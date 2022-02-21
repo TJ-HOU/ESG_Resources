@@ -3,6 +3,7 @@ title: "Preprints"
 ---
 
 ::: panel-tabset
+
 ## ArXiv
 
 ```{r echo=FALSE, results='asis'}
@@ -82,7 +83,8 @@ ssrn_fun<-function(url){
   urltext<-nodes%>%html_text(nodes)
   urltext<-gsub("\r", "", urltext)
   url<-html_attr(nodes, "href")
-  date<-raw%>%html_elements(".note-list span:nth-child(2)")%>%html_text2()
+  date.raw<-raw%>%html_elements("#versions-tooltip .trow+ .trow .note-list span , .note-list span:nth-child(2)")%>%html_text2()
+  date<-grep('Posted', date.raw, value=TRUE)
   date<- gsub("^.{0,8}", "", date)
   date<-noquote(date)
   # dataframe
@@ -100,7 +102,12 @@ ssrn_fun<-function(url){
   res_df<- res_df%>%select(title, author,date)
   return (res_df)
 }
-ssrn<-ssrn_fun("https://papers.ssrn.com/sol3/JELJOUR_Results.cfm?form_name=journalBrowse&journal_id=235330&Network=yes&lim=false&orderBy=ab_approval_date&orderDir=desc&strSelectedOption=6")
+
+url_pt1<-"https://papers.ssrn.com/sol3/JELJOUR_Results.cfm?npage="
+url_pt2<-"&form_name=journalBrowse&journal_id=1959162&Network=no&lim=false"
+i=1
+base_url<-paste0(url_pt1,i,url_pt2)
+ssrn<-ssrn_fun(base_url) 
 
 datatable(ssrn, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```

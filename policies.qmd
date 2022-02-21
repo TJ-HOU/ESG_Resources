@@ -2,6 +2,9 @@
 title: "Policies & Regulations"
 ---
 
+::: panel-tabset
+## LBS CCG
+
 ```{r echo=FALSE, message=FALSE, results='asis'}
 # LBS CCG
 library(rvest)
@@ -17,3 +20,115 @@ ccg_codes$source<-"Center for Corporate Governance, London Business School"
 datatable(ccg_codes, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
 
+## ECGI
+
+```{r include=FALSE}
+# ECGI codes
+base_url<-"https://ecgi.global/content/codes?page="
+ecgi_codes_fun<-function(link){
+  raw<-read_html(link)
+  # title
+  urltext<-raw%>%html_elements(".field-type-text .even")%>%html_text2()
+  nodes<-raw%>%html_nodes(".menu-item a")
+  url.raw<-html_attr(nodes, "href")
+  url <- paste0("https://ecgi.global/",url.raw[grep("/node/", url.raw)])
+  title<-paste0("<a href=",url,">",urltext,"</a>")
+  # country
+  #country<-raw%>%html_elements(".field-type-country .even")%>%html_text2()
+  # date
+  date<-raw%>%html_elements(".date-code")%>%html_text2()
+  # create ecgi_codes dataframe
+  res <- data.frame(title,date)
+  res$source<-"ECGI"
+  return (res)
+}
+# loop over pages
+i=1
+tgt_url<- paste0(base_url,i)
+x<-read_html(tgt_url)%>%html_elements(".field-type-text .even")%>%html_text2()
+ecgi_codes<-data.frame()
+while(!identical(x, character(0)) && i<=2){
+  Sys.sleep(10)
+  ecgi_codes_temp<-ecgi_codes_fun(tgt_url)
+  ecgi_codes<-rbind(ecgi_codes,ecgi_codes_temp)
+  i=i+1
+  tgt_url<- paste0(base_url,i)
+  x<-read_html(tgt_url)%>%html_elements(".field-type-text .even")%>%html_text2()
+}
+```
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+datatable(ecgi_codes, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
+```
+
+## SSF
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+# SSF
+library(rvest)
+library(dplyr)
+library(DT)
+library(stringr)
+codes.raw<-read_html("https://www.sustainablefinance.ch/en/digital-library-_content---1--3113.html?replibType=5&replibYearFrom=0&replibYearTo=9999&searchTerm=&btnSubmit=Filter")
+# title
+urltext<-codes.raw%>%html_elements(".divtable__cell:nth-child(1) .divtable__cellcontent")%>%html_text2()
+link<-codes.raw%>%html_nodes(".divtable__link a")
+link.raw<-html_attr(link, "href")
+link.raw.temp<-str_split(link.raw, '/', simplify = TRUE)[,3]
+df_temp<-data.frame(link.raw,link.raw.temp)%>%
+  rename(rawlink=1,link=2)%>%
+  distinct(link,.keep_all=TRUE)
+url<-df_temp$rawlink
+title<-paste0("<a href=",url,">",urltext,"</a>")
+# author
+author<-codes.raw%>%html_elements(".divtable__cell:nth-child(2) .divtable__cellcontent")%>%html_text2()
+# date
+date<-codes.raw%>%html_elements(".divtable__cell:nth-child(3) .divtable__cellcontent")%>%html_text2()
+# language
+language<-codes.raw%>%html_elements(".divtable__cell:nth-child(4) .divtable__cellcontent")%>%html_text2()
+
+ssf_codes<-data.frame(title,author,date,language)
+ssf_codes$source<-"SSF"
+datatable(ssf_codes, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
+```
+
+## TCFD
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+# TCFD
+library(rvest)
+library(dplyr)
+library(DT)
+
+base_url<-"https://www.tcfdhub.org/resource/?search_keyword&order=ASC&orderby=relevance&resource_type%5B0%5D=legislation-regulation&paged="
+tcfd_codes_fun<-function(link){
+  raw<-read_html(link)
+  # title
+  nodes<-raw%>%html_nodes("h3 a")
+  urltext<-nodes%>%html_text2()
+  url<-html_attr(nodes, "href")
+  title<-paste0("<a href=",url,">",urltext,"</a>")
+  # author
+  author<-raw%>%html_elements("h3+ .author")%>%html_text2()
+  author<-sub(".*Author: ", "", author) 
+  # create tcfd_codes dataframe
+  res <- data.frame(title,author)
+  res$source<-"TCFD"
+  return (res)
+}
+# loop over pages
+i=1
+tgt_url<- paste0(base_url,i)
+x<-read_html(tgt_url)%>%html_nodes("h3 a")%>%html_text2()
+tcfd_codes<-data.frame()
+while(!identical(x, character(0)) && i<=2){
+  Sys.sleep(10)
+  tcfd_codes_temp<-tcfd_codes_fun(tgt_url)
+  tcfd_codes<-rbind(tcfd_codes,tcfd_codes_temp)
+  i=i+1
+  tgt_url<- paste0(base_url,i)
+  x<-read_html(tgt_url)%>%html_nodes("h3 a")%>%html_text2()
+}
+datatable(tcfd_codes, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
+```
+:::

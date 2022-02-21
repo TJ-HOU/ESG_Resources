@@ -5,17 +5,47 @@ title: "Social Feeds"
 ::: panel-tabset
 ## Twitter
 
-```{r echo=FALSE, results='asis'}
+```{r include=FALSE}
+#install.packages("rtweet")
+library(rtweet)
+library(tidyverse)
 library(DT)
-library("readxl")
-twitter<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "twitter")
-twitter$Date <- format(as.Date(as.character(twitter$Date)), "%Y-%m-%d")
-datatable(twitter, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+library(keyring)
+
+appname<-key_get("twittername","thou40")
+apikey <-key_get("twitterkey","thou40")
+apisecret<-key_get("twittersecret","thou40")
+access_token<-key_get("twitter_ac_token","thou40")
+access_secret <-key_get("twitter_ac_secret","thou40")
+
+# create token named "twitter_token"
+twitter_token <- create_token(
+  app = appname,
+  consumer_key = apikey,
+  consumer_secret = apisecret,
+  access_token = access_token,
+  access_secret = access_secret)
+## search for 500 tweets using the #rstats hashtag
+esg_tweets <- search_tweets(q = "#ESG",
+                               n = 500)
+colnames(esg_tweets)
+selected_tweets<-esg_tweets%>%
+  select(status_id,created_at,screen_name,text,retweet_count,favorite_count)%>%
+  mutate(url=paste0("https://twitter.com/",screen_name,"/status/",status_id))%>%
+  mutate(link=paste0("<a href=",url,">",url,"</a>"))%>%
+  select(created_at,screen_name,text,retweet_count,favorite_count,link)%>%
+  arrange(desc(retweet_count))
+names(selected_tweets) <- c('date', 'user', 'tweet', 'retweet_count', 'favorite_count', 'url')
+```
+
+```{r echo=FALSE, results='asis'}
+datatable(selected_tweets, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
 
 ## Linkedin
 
 ```{r echo=FALSE, results='asis'}
+library("readxl")
 linkedin<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "linkedin")
 linkedin$Date <- format(as.Date(as.character(linkedin$Date)), "%Y-%m-%d")
 datatable(linkedin, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
@@ -23,7 +53,7 @@ datatable(linkedin, options = list(pageLength = 5),escape=FALSE, class = 'cell-b
 
 ## Reddit
 
-```{r echo=FALSE,message=FALSE,warning=FALSE,results='asis'}
+```{r include=FALSE}
 #devtools::install_version("RedditExtractoR", version = "2.1.5", repos = "http://cran.us.r-project.org")
 #install.packages("igraph")
 library(RedditExtractoR)
@@ -33,6 +63,9 @@ reddit_raw <- get_reddit(search_terms ="ESG")
 reddit_raw$title_new<-paste0("<a href=",reddit_raw$URL,">",reddit_raw$title,"</a>")
 reddit_select<-reddit_raw%>%select(title_new,post_date,num_comments,post_score,link)%>%distinct()
 colnames(reddit_select) <- c("Post","Post Date","# of comments","Post Score","External Link")
+```
+
+```{r echo=FALSE,message=FALSE,warning=FALSE,results='asis'}
 datatable(reddit_select, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
 :::
