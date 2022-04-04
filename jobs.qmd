@@ -5,7 +5,7 @@ title: "Jobs"
 ```{r echo=FALSE, results='asis'}
 library(DT)
 library("readxl")
-job<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "jobs")
+job<- read_excel("data.xlsx", sheet = "jobs")
 job$`Post Date` <- format(as.Date(as.character(job$`Post Date`)), "%Y-%m-%d")
 job$`Closing Date` <- format(as.Date(as.character(job$`Closing Date`)), "%Y-%m-%d")
 datatable(job, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')

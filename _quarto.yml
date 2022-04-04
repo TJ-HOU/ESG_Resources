@@ -28,6 +28,9 @@ website:
         menu:
         - jobs.qmd
         - training.qmd
+      - text: "Data"
+        menu:
+        - database.qmd
   pagefooter: "Copyright 2022, Tianjun Hou"
 
 format:

@@ -7,6 +7,7 @@ title: "Social Feeds"
 
 ```{r include=FALSE}
 #install.packages("rtweet")
+#install.packages("keyring")
 library(rtweet)
 library(tidyverse)
 library(DT)
@@ -46,26 +47,19 @@ datatable(selected_tweets, options = list(pageLength = 10),escape=FALSE, class =
 
 ```{r echo=FALSE, results='asis'}
 library("readxl")
-linkedin<- read_excel("D:/Research/ESG/ESG_website/data.xlsx", sheet = "linkedin")
+linkedin<- read_excel("data.xlsx", sheet = "linkedin")
 linkedin$Date <- format(as.Date(as.character(linkedin$Date)), "%Y-%m-%d")
 datatable(linkedin, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
 ```
 
 ## Reddit
 
-```{r include=FALSE}
-#devtools::install_version("RedditExtractoR", version = "2.1.5", repos = "http://cran.us.r-project.org")
-#install.packages("igraph")
-library(RedditExtractoR)
-library(tidyverse)
-library(DT)
-reddit_raw <- get_reddit(search_terms ="ESG")
-reddit_raw$title_new<-paste0("<a href=",reddit_raw$URL,">",reddit_raw$title,"</a>")
-reddit_select<-reddit_raw%>%select(title_new,post_date,num_comments,post_score,link)%>%distinct()
-colnames(reddit_select) <- c("Post","Post Date","# of comments","Post Score","External Link")
-```
-
 ```{r echo=FALSE,message=FALSE,warning=FALSE,results='asis'}
-datatable(reddit_select, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
+#reddit_raw <- find_thread_urls((keywords="ESG"))
+#reddit_raw$title_new<-paste0("<a href=",reddit_raw$url,">",reddit_raw$title,"</a>")
+#reddit_select<-reddit_raw%>%select(title_new,date_utc,subreddit,comments)%>%distinct()
+#colnames(reddit_select) <- c("Post","Post Date","Subreddit","# of comments")
+reddit_select<- read.csv("reddit_select.csv")
+datatable(reddit_select, options = list(pageLength = 10),escape=FALSE, class = "cell-border stripe")
 ```
 :::
