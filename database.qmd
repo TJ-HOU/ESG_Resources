@@ -1,0 +1,14 @@
+---
+title: "database"
+---
+
+```{r echo=FALSE, results='asis'}
+#install.packages("DT")
+library(DT)
+library("readxl")
+database<- read_excel("database.xlsx", sheet = "data")
+datatable(database, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
+```
+
+
+
