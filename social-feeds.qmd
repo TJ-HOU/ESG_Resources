@@ -55,11 +55,18 @@ datatable(linkedin, options = list(pageLength = 5),escape=FALSE, class = 'cell-b
 ## Reddit
 
 ```{r echo=FALSE,message=FALSE,warning=FALSE,results='asis'}
+<<<<<<< HEAD
 #reddit_raw <- find_thread_urls((keywords="ESG"))
 #reddit_raw$title_new<-paste0("<a href=",reddit_raw$url,">",reddit_raw$title,"</a>")
 #reddit_select<-reddit_raw%>%select(title_new,date_utc,subreddit,comments)%>%distinct()
 #colnames(reddit_select) <- c("Post","Post Date","Subreddit","# of comments")
 reddit_select<- read.csv("reddit_select.csv")
+=======
+reddit_raw <- find_thread_urls((keywords="ESG"))
+reddit_raw$title_new<-paste0("<a href=",reddit_raw$url,">",reddit_raw$title,"</a>")
+reddit_select<-reddit_raw%>%select(title_new,date_utc,subreddit,comments)%>%distinct()
+colnames(reddit_select) <- c("Post","Post Date","Subreddit","# of comments")
+>>>>>>> 572daf672ed3d9065f2133940a5d05ed22295cd8
 datatable(reddit_select, options = list(pageLength = 10),escape=FALSE, class = "cell-border stripe")
 ```
 :::
