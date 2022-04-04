@@ -1,12 +1,28 @@
 ---
+<<<<<<< HEAD
 title: "Database"
+=======
+<<<<<<< HEAD
+title: "Database"
+=======
+title: "database"
+>>>>>>> 572daf672ed3d9065f2133940a5d05ed22295cd8
+>>>>>>> 22c24ac6a240607f25a589f98befef857b0ce7f4
 ---
 
 ```{r echo=FALSE, results='asis'}
 #install.packages("DT")
 library(DT)
 library("readxl")
+<<<<<<< HEAD
 database<- read_excel("data.xlsx", sheet = "database")
+=======
+<<<<<<< HEAD
+database<- read_excel("data.xlsx", sheet = "database")
+=======
+database<- read_excel("database.xlsx", sheet = "data")
+>>>>>>> 572daf672ed3d9065f2133940a5d05ed22295cd8
+>>>>>>> 22c24ac6a240607f25a589f98befef857b0ce7f4
 datatable(database, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
 
