@@ -27,16 +27,14 @@ twitter_token <- create_token(
   access_token = access_token,
   access_secret = access_secret)
 ## search for 500 tweets using the #rstats hashtag
-esg_tweets <- search_tweets(q = "#ESG",
-                               n = 500)
+esg_tweets <- search_tweets(q = "#ESG",n = 500)
 colnames(esg_tweets)
 selected_tweets<-esg_tweets%>%
   select(status_id,created_at,screen_name,text,retweet_count,favorite_count)%>%
   mutate(url=paste0("https://twitter.com/",screen_name,"/status/",status_id))%>%
-  mutate(link=paste0("<a href=",url,">",url,"</a>"))%>%
-  select(created_at,screen_name,text,retweet_count,favorite_count,link)%>%
-  arrange(desc(retweet_count))
-names(selected_tweets) <- c('date', 'user', 'tweet', 'retweet_count', 'favorite_count', 'url')
+  mutate(link=paste0("<a href=",url,">",text,"</a>"))%>%
+  select(created_at,screen_name,link,retweet_count,favorite_count)
+names(selected_tweets) <- c('date', 'user', 'tweet', 'retweet_count', 'favorite_count')
 ```
 
 ```{r echo=FALSE, results='asis'}
@@ -55,18 +53,12 @@ datatable(linkedin, options = list(pageLength = 5),escape=FALSE, class = 'cell-b
 ## Reddit
 
 ```{r echo=FALSE,message=FALSE,warning=FALSE,results='asis'}
-<<<<<<< HEAD
-#reddit_raw <- find_thread_urls((keywords="ESG"))
-#reddit_raw$title_new<-paste0("<a href=",reddit_raw$url,">",reddit_raw$title,"</a>")
-#reddit_select<-reddit_raw%>%select(title_new,date_utc,subreddit,comments)%>%distinct()
+library(RedditExtractoR)
+#esg_urls <- find_thread_urls(subreddit="EsgInvesting", sort_by="top")
+#esg_urls$title_new<-paste0("<a href=",esg_urls$url,">",esg_urls$title,"</a>")
+#reddit_select<-esg_urls%>%select(title_new,date_utc,subreddit,comments)%>%distinct()
 #colnames(reddit_select) <- c("Post","Post Date","Subreddit","# of comments")
 reddit_select<- read.csv("reddit_select.csv")
-=======
-reddit_raw <- find_thread_urls((keywords="ESG"))
-reddit_raw$title_new<-paste0("<a href=",reddit_raw$url,">",reddit_raw$title,"</a>")
-reddit_select<-reddit_raw%>%select(title_new,date_utc,subreddit,comments)%>%distinct()
-colnames(reddit_select) <- c("Post","Post Date","Subreddit","# of comments")
->>>>>>> 572daf672ed3d9065f2133940a5d05ed22295cd8
 datatable(reddit_select, options = list(pageLength = 10),escape=FALSE, class = "cell-border stripe")
 ```
 :::
