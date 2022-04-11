@@ -34,20 +34,11 @@ selected_tweets<-esg_tweets%>%
   mutate(url=paste0("https://twitter.com/",screen_name,"/status/",status_id))%>%
   mutate(link=paste0("<a href=",url,">",text,"</a>"))%>%
   select(created_at,screen_name,link,retweet_count,favorite_count)
-names(selected_tweets) <- c('date', 'user', 'tweet', 'retweet_count', 'favorite_count')
+names(selected_tweets) <- c('Tweet','User','Date','Retweet_count', 'Favorite_count')
 ```
 
 ```{r echo=FALSE, results='asis'}
 datatable(selected_tweets, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
-```
-
-## Linkedin
-
-```{r echo=FALSE, results='asis'}
-library("readxl")
-linkedin<- read_excel("data.xlsx", sheet = "linkedin")
-linkedin$Date <- format(as.Date(as.character(linkedin$Date)), "%Y-%m-%d")
-datatable(linkedin, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
 ```
 
 ## Reddit

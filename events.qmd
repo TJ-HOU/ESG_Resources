@@ -20,7 +20,6 @@ date<-noquote(date)
 location<-noquote(location)
 # create pri dataframe
 pri <- data.frame(title,date,location)
-pri$organization <- 'UNPRI'
 pri_events_fun<-function(url){
   raw<-read_html(url)
   # title
@@ -36,6 +35,8 @@ pri_events_fun<-function(url){
   # create pri dataframe
   res <- data.frame(title,date,location)
   res$organization <- 'UNPRI'
+  res<-res[,c("title","organization","date","location")]
+  colnames(res)<-c("Title","Organization","Date","Location")
   return (res)
 }
 pri_events<-pri_events_fun(base_url)
@@ -58,8 +59,8 @@ while(!identical(x, character(0))){
 gri.raw<-read_html("https://www.globalreporting.org/reporting-support/events/")
 content<-gri.raw%>%html_table()
 gri.table<-content[[1]]
-gri_events<-gri.table[,c("Event","Date","Location","Organisation")]
-names(gri_events) <- c('title','date','location','organization')
+gri_events<-gri.table[,c("Event","Organisation","Date","Location")]
+colnames(gri_events)<-c("Title","Organization","Date","Location")
 ```
 
 ```{r echo=FALSE, results='asis'}
@@ -79,10 +80,12 @@ location<-noquote(location)
 # create ssf dataframe
 ssf_events<- data.frame(title,date,location)
 ssf_events$organization <- 'SSF'
+ssf_events<-ssf_events[,c("title","organization","date","location")]
+colnames(ssf_events)<-c("Title","Organization","Date","Location")
 ```
 
 ```{r echo=FALSE, results='asis'}
 library(DT)
 events<-rbind(pri_events,gri_events,ssf_events)
-datatable(events, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+datatable(events, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```

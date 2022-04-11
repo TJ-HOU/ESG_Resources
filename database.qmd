@@ -1,5 +1,9 @@
 ---
 title: "Database"
+execute:
+  echo: false
+twitter-card:
+  image: "https://quarto.org/docs/websites/images/tools.png"
 ---
 
 ```{r echo=FALSE, results='asis'}

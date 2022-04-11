@@ -14,9 +14,9 @@ codes.raw<-read_html("https://www.london.edu/faculty-and-research/centre-for-cor
 # title
 nodes<-codes.raw%>%html_elements(".text-placeholder a , .rich-text a")
 urltext<-nodes%>%html_text2()
-title<-paste0("<a href=",html_attr(nodes, "href"),">",urltext,"</a>")
-ccg_codes<-data.frame(title)
-ccg_codes$source<-"Center for Corporate Governance, London Business School"
+Title<-paste0("<a href=",html_attr(nodes, "href"),">",urltext,"</a>")
+ccg_codes<-data.frame(Title)
+ccg_codes$Source<-"Center for Corporate Governance, London Business School"
 datatable(ccg_codes, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
 
@@ -32,14 +32,15 @@ ecgi_codes_fun<-function(link){
   nodes<-raw%>%html_nodes(".menu-item a")
   url.raw<-html_attr(nodes, "href")
   url <- paste0("https://ecgi.global/",url.raw[grep("/node/", url.raw)])
-  title<-paste0("<a href=",url,">",urltext,"</a>")
+  Title<-paste0("<a href=",url,">",urltext,"</a>")
   # country
   #country<-raw%>%html_elements(".field-type-country .even")%>%html_text2()
   # date
-  date<-raw%>%html_elements(".date-code")%>%html_text2()
+  Date<-raw%>%html_elements(".date-code")%>%html_text2()
   # create ecgi_codes dataframe
-  res <- data.frame(title,date)
-  res$source<-"ECGI"
+  res <- data.frame(Title,Date)
+  res$Source<-"ECGI"
+  res<-res[,c("Title","Source","Date")]
   return (res)
 }
 # loop over pages
@@ -89,6 +90,8 @@ language<-codes.raw%>%html_elements(".divtable__cell:nth-child(4) .divtable__cel
 
 ssf_codes<-data.frame(title,author,date,language)
 ssf_codes$source<-"SSF"
+ssf_codes<-ssf_codes[,c("title","author","source","date","language")]
+colnames(ssf_codes)<-c("Title","Author","Source","Date","Language")
 datatable(ssf_codes, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
 
@@ -114,6 +117,7 @@ tcfd_codes_fun<-function(link){
   # create tcfd_codes dataframe
   res <- data.frame(title,author)
   res$source<-"TCFD"
+  colnames(res)<-c("Title","Author","Source")
   return (res)
 }
 # loop over pages

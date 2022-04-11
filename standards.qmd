@@ -6,5 +6,5 @@ title: "Disclosure Standards"
 library(DT)
 library("readxl")
 standard<- read_excel("data.xlsx", sheet = "standards")
-datatable(standard, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+datatable(standard, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```

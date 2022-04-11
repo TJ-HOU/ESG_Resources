@@ -5,9 +5,19 @@ project:
 
 website:
   title: "ESG"
+  page-footer: 
+    border: False
+    center: 
+      - "Copyright 2022, Tianjun Hou"
+  search:
+    location: navbar
+    type: overlay
+    copy-button: true
   navbar:
-    search: true
     collapse: false
+    right:
+      - icon: github
+        href: https://github.com/TJ-HOU/ESG_Resources/
     left:
       - text: "Preprints"
         file: preprints.qmd
@@ -31,11 +41,10 @@ website:
       - text: "Data"
         menu:
         - database.qmd
-  pagefooter: "Copyright 2022, Tianjun Hou"
 
 format:
   html:
-    theme: cosmo
+    theme: sketchy
     css: styles.css
     toc: true
 

@@ -1,5 +1,8 @@
 ---
 title: "About"
+about: 
+  template: jolla
+  image: profile.jpeg
 ---
 
-This is a website that hosts Environmental, Social, Governance (ESG) resources created by Quarto package.
+This is a website that hosts Environmental, Social, Governance (ESG) resources created by R studio and Quarto package.

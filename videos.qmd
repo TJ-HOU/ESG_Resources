@@ -13,8 +13,8 @@ key<-key_get("youtubetoken","thou40")
 yt_oauth(app_id, app_secret,token=key)
 youtube<-yt_search("esg investing",published_after = "2021-02-13T00:00:00Z")
 youtube$url<-paste0("<a href=https://www.youtube.com/watch?v=",youtube$video_id,">",youtube$title,"</a>")
-youtube_select<-youtube%>%select(url,publishedAt,description,channelTitle)
-colnames(youtube_select) <- c("Title", "Date", "Description","Channel")
+youtube_select<-youtube%>%select(url,channelTitle,publishedAt,description)
+colnames(youtube_select) <- c("Title", "Channel","Date", "Description")
 ```
 
 ```{r echo=FALSE, results='asis'}

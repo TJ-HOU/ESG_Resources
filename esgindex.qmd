@@ -6,5 +6,5 @@ title: "ESG Index"
 library(DT)
 library("readxl")
 index<- read_excel("data.xlsx", sheet = "index")
-datatable(index, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+datatable(index, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```

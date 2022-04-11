@@ -25,6 +25,7 @@ date<-sub(".*? ", "", date)
 date<-noquote(date)
 # create arxiv dataframe
 arxiv <- data.frame(title,author,date)
+colnames(arxiv)<-c("Title","Author","Date")
 library(DT)
 datatable(arxiv, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
@@ -50,6 +51,7 @@ ideas_fun<-function(url){
   title<-paste0("<a href=", "https://ideas.repec.org",html_attr(nodes, "href"),">",urltext,"</a>")
   # create ideas dataframe
   res<-data.frame(title,author,date)
+  colnames(res)<-c("Title","Author","Date")
   return (res)
 }
 ideas<-ideas_fun(base_url) 
@@ -99,6 +101,7 @@ ssrn_fun<-function(url){
   res_df$author<-author
   res_df$title<-paste0("<a href=", res_df$url,">",res_df$urltext,"</a>")
   res_df<- res_df%>%select(title, author,date)
+  colnames(res_df)<-c("Title","Author","Date")
   return (res_df)
 }
 

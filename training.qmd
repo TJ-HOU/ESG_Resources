@@ -6,5 +6,5 @@ title: "Training"
 library(DT)
 library("readxl")
 training<- read_excel("data.xlsx", sheet = "training")
-datatable(training, options = list(pageLength = 5),escape=FALSE, class = 'cell-border stripe')
+datatable(training, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```

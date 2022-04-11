@@ -35,5 +35,7 @@ brunswick_podcasts$organization<-"Brunswick"
 ```{r echo=FALSE, results='asis'}
 library(DT)
 podcasts<-rbind(msci_podcasts,cfa_podcasts,sp_podcasts,brunswick_podcasts)
+podcasts<-podcasts[,c("title","organization","date")]
+colnames(podcasts)<-c("Title","Organization","Date")
 datatable(podcasts, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```

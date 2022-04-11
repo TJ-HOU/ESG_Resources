@@ -22,6 +22,8 @@ pri_blogs_fun<-function(url){
   # create pri dataframe
   res <- data.frame(title,date)
   res$organization <- 'UNPRI'
+  res <- res[, c("title", "organization", "date")]
+  colnames(res)<-c("Title", "Organization", "Date")
   return (res)
 }
 # loop over pages
@@ -55,6 +57,8 @@ title<-paste0("<a href=", html_attr(nodes,"href"),">",urltext,"</a>")
 # create pri dataframe
 cdp_blogs <- data.frame(title,date)
 cdp_blogs$organization <- 'CDP'
+cdp_blogs <- cdp_blogs[, c("title", "organization", "date")]
+colnames(cdp_blogs)<-c("Title", "Organization", "Date")
 ```
 
 ```{r echo=FALSE, results='asis'}
