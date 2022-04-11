@@ -7,17 +7,19 @@ title: "Videos"
 library(tuber)
 library(tidyverse)
 library(keyring)
-app_id<-key_get("youtubeid","thou40")
-app_secret <-key_get("youtubesecret","thou40")
-key<-key_get("youtubetoken","thou40")
-yt_oauth(app_id, app_secret,token=key)
-youtube<-yt_search("esg investing",published_after = "2021-02-13T00:00:00Z")
-youtube$url<-paste0("<a href=https://www.youtube.com/watch?v=",youtube$video_id,">",youtube$title,"</a>")
-youtube_select<-youtube%>%select(url,channelTitle,publishedAt,description)
-colnames(youtube_select) <- c("Title", "Channel","Date", "Description")
+#app_id<-key_get("youtubeid","thou40")
+#app_secret <-key_get("youtubesecret","thou40")
+#key<-key_get("youtubetoken","thou40")
+#yt_oauth(app_id, app_secret,token=key)
+#youtube<-yt_search("esg investing",published_after = "2021-02-13T00:00:00Z")
+#youtube$url<-paste0("<a href=https://www.youtube.com/watch?v=",youtube$video_id,">",youtube$title,"</a>")
+#youtube_select<-youtube%>%select(url,channelTitle,publishedAt,description)
+#colnames(youtube_select) <- c("Title", "Channel","Date", "Description")
+#write.csv(youtube_select,"youtube_select.csv")
 ```
 
-```{r echo=FALSE, results='asis'}
+```{r echo=FALSE, message=FALSE,,warning=FALSE,results='asis'}
 library(DT)
+youtube_select<- read_csv("youtube_select.csv",show_col_types = FALSE)
 datatable(youtube_select, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
