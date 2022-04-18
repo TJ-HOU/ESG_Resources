@@ -2,11 +2,51 @@
 title: "Jobs"
 ---
 
-```{r echo=FALSE, results='asis'}
+```{r echo=FALSE}
+library(rvest)
+library(stringr)
+base_url<-"https://www.sri-connect.com/index.php?option=com_content&view=article&id=1137&Itemid=1620"
+sri.raw<-read_html(base_url)
+nodes<-sri.raw%>%html_elements("h5")
+urltext<-nodes%>%html_text(nodes)
+# company
+company_list<-NULL
+position_list<-NULL
+location_list<-NULL
+for (i in urltext){
+  temp_company<-sub("– .*", "", i)
+  company_list<-c(company_list,sub(".*:", "",temp_company))
+  temp_position<-str_match_all(i, "^[^\\(]+") %>% toString()
+  position<-sub(".*–", "", temp_position)
+  position_list<-c(position_list,position)
+  temp_location<-sub(".*\\(", "", i)
+  location<-sub("\\|.*", "", temp_location)
+  location_list<-c(location_list,location)
+}
+urls<-sri.raw%>%html_elements("h5 + p a")
+title<-paste0("<a href=", html_attr(urls, "href"),">",position_list,"</a>")
+# create sri dataframe
+sri <- data.frame(title,company_list,location_list)
+colnames(sri)<-c("Position","Organization","Location")
+sri$Source<-"SRI-CONNECT"
+```
+
+```{r echo=FALSE}
+base_url<-"https://www.sustainablefinance.ch/en/job-listings-_content---1--1124.html"
+ssf.raw<-read_html(base_url)
+nodes<-ssf.raw%>%html_elements(".skytableevencol a")
+title<-nodes%>%html_text(nodes)
+Position<-paste0("<a href=", html_attr(nodes, "href"),">",title,"</a>")
+company<-ssf.raw%>%html_elements(".skytablecol3")%>%html_text()
+Organization<-company[-1]
+location<-ssf.raw%>%html_elements(".skytablelastcol")%>%html_text()
+Location<-location[-1]
+ssf <- data.frame(Position,Organization,Location)
+ssf$Source<-"Swiss Sustainable Finance"
+```
+
+```{r echo=FALSE}
 library(DT)
-library("readxl")
-job<- read_excel("data.xlsx", sheet = "jobs")
-job$`Post Date` <- format(as.Date(as.character(job$`Post Date`)), "%Y-%m-%d")
-job$`Closing Date` <- format(as.Date(as.character(job$`Closing Date`)), "%Y-%m-%d")
-datatable(job, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
+jobs<-rbind(ssf,sri)
+datatable(jobs, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```

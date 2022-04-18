@@ -30,50 +30,9 @@ library(DT)
 datatable(arxiv, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
 
-## IDEAS
-
-```{r echo=FALSE, results='asis'}
-library(rvest)
-library(stringr)
-base_url<-"https://ideas.repec.org/cgi-bin/htsearch?form=extended&wm=wrd&dt=range&ul=%25%2Fa%2F%25&q=ESG&cmd=Search%21&wf=F000&s=R&db=01%2F01%2F2021&de=31%2F12%2F2022"
-ideas_fun<-function(url){
-  raw<-read_html(url)
-  # date and author
-  rawtext<-raw%>%html_elements("#content-block .list-group-item")%>%html_text2()
-  author_date<-str_extract(rawtext, "[^:]+")
-  date<-substr(author_date,nchar(author_date)-4, nchar(author_date)-1)
-  author<-substr(author_date,1, nchar(author_date)-nchar(date)-3)
-  date<-noquote(date)
-  author<-noquote(author)
-  # title
-  nodes<-raw%>%html_nodes(".list-group-item a")
-  urltext<-nodes%>%html_text(nodes)
-  title<-paste0("<a href=", "https://ideas.repec.org",html_attr(nodes, "href"),">",urltext,"</a>")
-  # create ideas dataframe
-  res<-data.frame(title,author,date)
-  colnames(res)<-c("Title","Author","Date")
-  return (res)
-}
-ideas<-ideas_fun(base_url) 
-# loop over pages
-i=1
-tgt_url<- paste0(base_url,"&np=",i)
-x<-read_html(tgt_url)%>%html_elements("#content-block .list-group-item")%>%html_text2()
-while(!identical(x, character(0))){
-  Sys.sleep(10)
-  idea_temp<-ideas_fun(tgt_url)
-  ideas<-rbind(ideas,idea_temp)
-  i=i+1
-  tgt_url<- paste0(base_url,"&np=",i)
-  x<-read_html(tgt_url)%>%html_elements("#content-block .list-group-item")%>%html_text2()
-}
-library(DT)
-datatable(ideas, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
-```
-
 ## SSRN
 
-```{r echo=FALSE, results='asis',message=FALSE}
+```{r echo=FALSE, message=FALSE, results='asis'}
 library(rvest)
 library(DT)
 library(tidyverse)
@@ -110,7 +69,48 @@ url_pt2<-"&form_name=journalBrowse&journal_id=1959162&Network=no&lim=false"
 i=1
 base_url<-paste0(url_pt1,i,url_pt2)
 ssrn<-ssrn_fun(base_url) 
-
 datatable(ssrn, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
+
+## IDEAS
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+library(rvest)
+library(stringr)
+base_url<-"https://ideas.repec.org/cgi-bin/htsearch?form=extended&wm=wrd&dt=range&ul=%25%2Fa%2F%25&q=ESG&cmd=Search%21&wf=F000&s=R&db=01%2F01%2F2021&de=31%2F12%2F2022"
+ideas_fun<-function(url){
+  raw<-read_html(url)
+  # date and author
+  rawtext<-raw%>%html_elements("#content-block .list-group-item")%>%html_text2()
+  author_date<-str_extract(rawtext, "[^:]+")
+  date<-substr(author_date,nchar(author_date)-4, nchar(author_date)-1)
+  author<-substr(author_date,1, nchar(author_date)-nchar(date)-3)
+  date<-noquote(date)
+  author<-noquote(author)
+  # title
+  nodes<-raw%>%html_nodes(".list-group-item a")
+  urltext<-nodes%>%html_text(nodes)
+  title<-paste0("<a href=", "https://ideas.repec.org",html_attr(nodes, "href"),">",urltext,"</a>")
+  # create ideas dataframe
+  res<-data.frame(title,author,date)
+  colnames(res)<-c("Title","Author","Date")
+  return (res)
+}
+ideas<-ideas_fun(base_url) 
+# loop over pages
+i=1
+tgt_url<- paste0(base_url,"&np=",i)
+x<-read_html(tgt_url)%>%html_elements("#content-block .list-group-item")%>%html_text2()
+while(!identical(x, character(0)) && i<=2){
+  Sys.sleep(20)
+  idea_temp<-ideas_fun(tgt_url)
+  ideas<-rbind(ideas,idea_temp)
+  i=i+1
+  tgt_url<- paste0(base_url,"&np=",i)
+  x<-read_html(tgt_url)%>%html_elements("#content-block .list-group-item")%>%html_text2()
+}
+library(DT)
+datatable(ideas, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
+```
+
 :::

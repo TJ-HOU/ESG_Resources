@@ -1,16 +1,23 @@
 [
   {
-    "objectID": "videos.html",
-    "href": "videos.html",
-    "title": "Videos",
+    "objectID": "training.html",
+    "href": "training.html",
+    "title": "Training",
     "section": "",
-    "text": "New names:\nRows: 591 Columns: 5\n── Column specification\n──────────────────────────────────────────────────────── Delimiter: \",\" chr\n(3): Title, Channel, Description dbl (1): ...1 dttm (1): Date\nℹ Use `spec()` to retrieve the full column specification for this data. ℹ\nSpecify the column types or set `show_col_types = FALSE` to quiet this message.\n• `` -> `...1`"
+    "text": "[1] \"https://www.sustainable-investment.eu/de/kurse/\"                                                             \n [2] \"https://www.ebs.edu/de/zertifikatsprogramm/corporate-sustainable-finance\"                                    \n [3] \"https://www.ebs.edu/de/zertifikatsprogramm/sustainable-und-responsible-investments\"                          \n [4] \"http://www.frankfurt-school.de/home/international-advisory-services/development-finance-programmes.html\"     \n [5] \"https://www.maastrichtuniversity.nl/education/master/master-international-business-track-sustainable-finance\"\n [6] \"https://www.rsm.nl/executive-education/open-programmes/programmes/sustainable-finance/overview/\"             \n [7] \"http://sps.columbia.edu/certificates/sustainable-finance-certificate\"                                        \n [8] \"http://www.smithschool.ox.ac.uk/research-programmes/stranded-assets/\"                                        \n [9] \"http://www.st-andrews.ac.uk/management/research/#fim\"                                                        \n[10] \"https://www.manchester.ac.uk/study/masters/courses/list/06537/msc-development-finance/\""
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "About",
+    "objectID": "preprints.html",
+    "href": "preprints.html",
+    "title": "Preprints",
     "section": "",
-    "text": "This is a website that hosts Environmental, Social, Governance (ESG) resources created by R studio and Quarto package."
+    "text": "ArXivSSRNIDEAS"
+  },
+  {
+    "objectID": "preprints.html#ssrn",
+    "href": "preprints.html#ssrn",
+    "title": "Preprints",
+    "section": "SSRN",
+    "text": "SSRN\n── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──\n✓ ggplot2 3.3.5     ✓ purrr   0.3.4\n✓ tibble  3.1.6     ✓ dplyr   1.0.8\n✓ tidyr   1.2.0     ✓ forcats 0.5.1\n✓ readr   2.1.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\nx dplyr::filter()         masks stats::filter()\nx readr::guess_encoding() masks rvest::guess_encoding()\nx dplyr::lag()            masks stats::lag()\n\n\n\n\n:::"
   }
 ]

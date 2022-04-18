@@ -33,7 +33,9 @@ selected_tweets<-esg_tweets%>%
   select(status_id,created_at,screen_name,text,retweet_count,favorite_count)%>%
   mutate(url=paste0("https://twitter.com/",screen_name,"/status/",status_id))%>%
   mutate(link=paste0("<a href=",url,">",text,"</a>"))%>%
-  select(created_at,screen_name,link,retweet_count,favorite_count)
+  mutate(date=substr(created_at,1,10))%>%
+  select(link,screen_name,date,retweet_count,favorite_count)
+
 names(selected_tweets) <- c('Tweet','User','Date','Retweet_count', 'Favorite_count')
 ```
 
@@ -42,14 +44,36 @@ datatable(selected_tweets, options = list(pageLength = 10),escape=FALSE, class =
 ```
 
 ## Reddit
-
-```{r echo=FALSE,message=FALSE,warning=FALSE,results='asis'}
-library(RedditExtractoR)
-#esg_urls <- find_thread_urls(subreddit="EsgInvesting", sort_by="top")
-#esg_urls$title_new<-paste0("<a href=",esg_urls$url,">",esg_urls$title,"</a>")
-#reddit_select<-esg_urls%>%select(title_new,date_utc,subreddit,comments)%>%distinct()
-#colnames(reddit_select) <- c("Post","Post Date","Subreddit","# of comments")
-reddit_select<- read.csv("reddit_select.csv")
-datatable(reddit_select, options = list(pageLength = 10),escape=FALSE, class = "cell-border stripe")
+```{r include=FALSE}
+#install.packages("reticulate")
+library(reticulate)
+#py_install("praw")
+#py_install("pandas")
 ```
+
+```{python include=FALSE}
+import praw
+import pandas as pd
+reddit = praw.Reddit(client_id='PZPHSTlo-4q-AHybgMnJ0w',client_secret='aAo7ppW4gA9evNae5WxTdokpYJQgoA',user_agent='ESG_Website')
+posts = []
+esg_subreddit = reddit.subreddit('EsgInvesting')
+for post in esg_subreddit.hot(limit=100):
+    posts.append([post.title, post.created, post.subreddit, post.permalink, post.num_comments, post.selftext])
+posts = pd.DataFrame(posts,columns=['title','date','subreddit','url','num_comments','body'])
+```
+
+```{r include=FALSE}
+reddit_raw<-py$posts
+reddit_raw$Post<-paste0("<a href=https://www.reddit.com",
+                        reddit_raw$url,">",reddit_raw$title,"</a>")
+reddit_raw$Date<-format(as.POSIXct(reddit_raw$date, origin='1970-01-01'), format='%Y/%m/%d')
+reddit_select<-reddit_raw%>%select(Post,Date,num_comments,body)
+colnames(reddit_select) <- c("Post","Date","# of comments","Text")
+```
+
+```{r echo=FALSE, results='asis'}
+library(DT)
+datatable(reddit_select, options = list(pageLength = 10),escape=FALSE,class ='cell-border stripe')
+```
+
 :::
