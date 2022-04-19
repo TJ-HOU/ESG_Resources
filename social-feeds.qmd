@@ -44,6 +44,7 @@ datatable(selected_tweets, options = list(pageLength = 10),escape=FALSE, class =
 ```
 
 ## Reddit
+
 ```{r include=FALSE}
 #install.packages("reticulate")
 library(reticulate)
@@ -75,5 +76,4 @@ colnames(reddit_select) <- c("Post","Date","# of comments","Text")
 library(DT)
 datatable(reddit_select, options = list(pageLength = 10),escape=FALSE,class ='cell-border stripe')
 ```
-
 :::
