@@ -1,9 +1,30 @@
 [
   {
+    "objectID": "preprints.html",
+    "href": "preprints.html",
+    "title": "Preprints",
+    "section": "",
+    "text": "ArXivSSRNIDEAS"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "About",
     "section": "",
     "text": "This is a website that hosts Environmental, Social, Governance (ESG) resources created by R studio and Quarto package."
+  },
+  {
+    "objectID": "policies.html",
+    "href": "policies.html",
+    "title": "Policies & Regulations",
+    "section": "",
+    "text": "LBS CCGECGISSFTCFD"
+  },
+  {
+    "objectID": "social-feeds.html",
+    "href": "social-feeds.html",
+    "title": "Social Feeds",
+    "section": "",
+    "text": "TwitterReddit"
   }
 ]
