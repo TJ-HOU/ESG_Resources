@@ -1,9 +1,5 @@
 ---
 title: "Database"
-execute:
-  echo: false
-twitter-card:
-  image: "https://quarto.org/docs/websites/images/tools.png"
 ---
 
 ```{r echo=FALSE, results='asis'}
@@ -13,6 +9,3 @@ library("readxl")
 database<- read_excel("data.xlsx", sheet = "database")
 datatable(database, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
-
-
-
