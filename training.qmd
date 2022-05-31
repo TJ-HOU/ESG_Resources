@@ -7,13 +7,16 @@ library(DT)
 library(rvest)
 base_url<-"https://www.sustainablefinance.ch/en/other-sustainable-finance-programmes-_content---1--1084.html"
 ssf.raw<-read_html(base_url)
+# Courses
 nodes<-ssf.raw%>%html_elements(".skytableevencol")
 links<-ssf.raw%>%html_elements(".skytablerow6 .skytableevencol a , .skytablerow4 .skytableevencol a , .skytablerow2 .skytableevencol a , .skytablerow8 .skytableevencol a , .skytableoddrow .skytableevencol a , .skytableevencol a+ a")
 title<-nodes%>%html_text(nodes)
 courses<-title[-1]
 Courses<-paste0("<a href=", html_attr(links, "href"),">",courses,"</a>")
+# Organization
 institute<-ssf.raw%>%html_elements(".skytablecol1")%>%html_text()
 Organization<-institute[-1]
+# Target
 target<-ssf.raw%>%html_elements(".skytablelastcol")%>%html_text()
 Target<-target[-1]
 training <- data.frame(Courses,Organization,Target)

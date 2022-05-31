@@ -1,26 +1,65 @@
 ---
-title: "Videos"
+title: "Videos (Under Maintenance)"
 ---
 
-```{r echo=FALSE, message=FALSE,sresults='asis'}
-#install.packages("tuber")
-library(tuber)
-library(tidyverse)
-library(keyring)
-#app_id<-key_get("youtubeid","thou40")
-#app_secret <-key_get("youtubesecret","thou40")
-#key<-key_get("youtubetoken","thou40")
-yt_oauth("645678923923-460dpe1fmkcj9io9iiba95g6tfiatpht.apps.googleusercontent.com","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",token="AIzaSyDu02YywvOwJXt12Erqauubv4P_Nz-_q-0")
-youtube<-yt_search("esg investing",published_after = "2021-02-13T00:00:00Z")
-youtube$url<-paste0("<a href=https://www.youtube.com/watch?v=",youtube$video_id,">",youtube$title,"</a>")
-youtube$date<-substr(youtube$publishedAt,1,10)
-youtube_select<-youtube%>%select(url,channelTitle,date,description)
-colnames(youtube_select) <- c("Title", "Channel","Date", "Description")
-#write.csv(youtube_select,"youtube_select.csv")
+```{r include=FALSE,message=FALSE}
+#remove.packages("reticulate")
+#install.packages("reticulate")
+library(reticulate)
+#py_install("selenium")
+#py_install("pandas")
+```
+
+```{python include=FALSE}
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.edge.service import Service
+import time
+import pandas as pd
+s=Service(r"/Users/tj_hou/Downloads/edgedriver_mac64/msedgedriver")
+driver = webdriver.Edge(service=s)
+driver.get('https://www.youtube.com/results?search_query=esginvesting')
+# ensure that the page is loaded
+time.sleep(10)
+# scrolling down the page 5 times
+i=0
+while (i<5) :
+    driver.execute_script("var scrollingElement = (document.scrollingElement || document.body);scrollingElement.scrollTop = scrollingElement.scrollHeight;")
+    time.sleep(1)
+    i=i+1
+
+    # once end element is located, break out of the loop
+    end_result = driver.find_element_by_css_selector('#message').is_displayed()
+    if end_result == True:
+        break
+
+# select data of videos
+youtube_data = []
+for result in driver.find_elements_by_css_selector('.text-wrapper.style-scope.ytd-video-renderer'):   
+  title = result.find_element_by_css_selector('.title-and-badge.style-scope.ytd-video-renderer').text
+  link = result.find_element_by_css_selector('.title-and-badge.style-scope.ytd-video-renderer a').get_attribute('href')
+  channel_name = result.find_element_by_css_selector('.long-byline').text
+  views = result.find_element_by_css_selector('.style-scope ytd-video-meta-block').text.split('\n')[0]
+  time_published = result.find_element_by_css_selector('.style-scope ytd-video-meta-block').text.split('\n')[1]
+  youtube_data.append({
+    'title': title,
+    'link': link,
+    'channel': channel_name,
+    'views': views,
+    'time_published': time_published,
+    })
+
+driver.close()
+df=pd.DataFrame(youtube_data)
 ```
 
 ```{r echo=FALSE, message=FALSE,,warning=FALSE,results='asis'}
 library(DT)
-#youtube_select<- read_csv("youtube_select.csv",show_col_types = FALSE)
+library(tidyverse)
+youtube<-py$df
+### the hyperlink doesn't work on website, need to fix it ###
+youtube$Title<-paste0("<a href='",youtube$link,"'>",youtube$title,"</a>")
+youtube_select<-youtube%>%select(Title,channel,views,time_published)
+colnames(youtube_select) <- c("Title","Channel","Time_published","Views")
 datatable(youtube_select, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```

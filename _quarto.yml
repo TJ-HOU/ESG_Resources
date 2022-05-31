@@ -44,7 +44,7 @@ website:
 
 format:
   html:
-    theme: sketchy
+    theme: yeti
     css: styles.css
     toc: true
 

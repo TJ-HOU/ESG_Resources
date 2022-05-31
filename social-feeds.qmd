@@ -13,6 +13,7 @@ library(tidyverse)
 library(DT)
 library(keyring)
 
+# please use your own twitter api key
 appname<-key_get("twittername","thou40")
 apikey <-key_get("twitterkey","thou40")
 apisecret<-key_get("twittersecret","thou40")
@@ -26,7 +27,7 @@ twitter_token <- create_token(
   consumer_secret = apisecret,
   access_token = access_token,
   access_secret = access_secret)
-## search for 500 tweets using the #rstats hashtag
+# search for 500 tweets using the #rstats hashtag
 esg_tweets <- search_tweets(q = "#ESG",n = 500)
 colnames(esg_tweets)
 selected_tweets<-esg_tweets%>%
@@ -50,12 +51,20 @@ datatable(selected_tweets, options = list(pageLength = 10),escape=FALSE, class =
 library(reticulate)
 #py_install("praw")
 #py_install("pandas")
+#py_install("keyring")
 ```
 
 ```{python include=FALSE}
 import praw
 import pandas as pd
-reddit = praw.Reddit(client_id='PZPHSTlo-4q-AHybgMnJ0w',client_secret='aAo7ppW4gA9evNae5WxTdokpYJQgoA',user_agent='ESG_Website')
+import keyring
+
+# please use your own reddit api key
+id=keyring.get_password('reddit', 'id')
+secret=keyring.get_password('reddit', 'secret')
+agent=keyring.get_password('reddit', 'agent')
+
+reddit = praw.Reddit(client_id=id,client_secret=secret,user_agent=agent)
 posts = []
 esg_subreddit = reddit.subreddit('EsgInvesting')
 for post in esg_subreddit.hot(limit=100):

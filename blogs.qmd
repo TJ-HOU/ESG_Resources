@@ -44,6 +44,7 @@ while(!identical(x, character(0))){
 ```{r echo=FALSE, results='asis'}
 # CDP blogs
 cdp.raw<-read_html("https://www.cdp.net/en/blog/")
+### can try to scroll down a couple more times before select data ###
 # date
 date<-cdp.raw%>%html_nodes(".article__type")%>%html_text2()
 date<-sub("^[^-]*", "", date)

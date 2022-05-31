@@ -3,6 +3,7 @@ title: "Jobs"
 ---
 
 ```{r echo=FALSE}
+# jobs from sri-connect
 library(rvest)
 library(stringr)
 base_url<-"https://www.sri-connect.com/index.php?option=com_content&view=article&id=1137&Itemid=1620"
@@ -32,6 +33,7 @@ sri$Source<-"SRI-CONNECT"
 ```
 
 ```{r echo=FALSE}
+# jobs from sustainablefinance
 base_url<-"https://www.sustainablefinance.ch/en/job-listings-_content---1--1124.html"
 ssf.raw<-read_html(base_url)
 nodes<-ssf.raw%>%html_elements(".skytableevencol a")

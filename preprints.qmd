@@ -7,6 +7,7 @@ title: "Preprints"
 
 ```{r echo=FALSE, results='asis'}
 library(rvest)
+### can try other search conditions ###
 arxiv.raw<-read_html("https://arxiv.org/search/advanced?advanced=&terms-0-operator=AND&terms-0-term=ESG&terms-0-field=abstract&terms-1-operator=NOT&terms-1-term=Economic+Scenario+Generators&terms-1-field=abstract&classification-economics=y&classification-physics_archives=all&classification-q_finance=y&classification-include_cross_list=include&date-filter_by=all_dates&date-year=&date-from_date=&date-to_date=&date-date_type=submitted_date&abstracts=show&size=50&order=")
 # title
 urltext<-arxiv.raw%>%html_elements(".is-5")%>%html_text2()
@@ -66,9 +67,20 @@ ssrn_fun<-function(url){
 
 url_pt1<-"https://papers.ssrn.com/sol3/JELJOUR_Results.cfm?npage="
 url_pt2<-"&form_name=journalBrowse&journal_id=1959162&Network=no&lim=false"
+# loop over 2 pages, can try more
 i=1
 base_url<-paste0(url_pt1,i,url_pt2)
 ssrn<-ssrn_fun(base_url) 
+x<-read_html(base_url)%>%html_elements(".optClickTitle")%>%html_text2()
+while(!identical(x, character(0)) && i<=2){
+  Sys.sleep(20)
+  ssrn_temp<-ssrn_fun(base_url)
+  ssrn<-rbind(ssrn,ssrn_temp)
+  i=i+1
+  base_url<-paste0(url_pt1,i,url_pt2)
+  x<-read_html(base_url)%>%html_elements("#content-block .list-group-item")%>%html_text2()
+}
+
 datatable(ssrn, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
 
@@ -97,7 +109,7 @@ ideas_fun<-function(url){
   return (res)
 }
 ideas<-ideas_fun(base_url) 
-# loop over pages
+# loop over 2 pages, can try more
 i=1
 tgt_url<- paste0(base_url,"&np=",i)
 x<-read_html(tgt_url)%>%html_elements("#content-block .list-group-item")%>%html_text2()
@@ -112,5 +124,4 @@ while(!identical(x, character(0)) && i<=2){
 library(DT)
 datatable(ideas, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
 ```
-
 :::
