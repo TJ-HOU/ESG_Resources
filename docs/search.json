@@ -2,8 +2,22 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "About",
+    "title": "Tianjun Hou",
     "section": "",
-    "text": "This is a website that hosts Environmental, Social, Governance (ESG) resources created by R studio and Quarto package."
+    "text": "Tianjun Hou studies financial engineering and environmental science. She developed this website to host Environmental, Social, Governance (ESG) resources by R studio and Quarto package when she worked as a graduate assistant at Georgia Tech.\n\n\nGeorgia Institute of Technology, Atlanta, GA\nM.S in Quantitative and Computational Finance | Aug 2021 - Dec 2022\nYale University, New Haven, CT\nM.S in Environmental Science | Aug 2013 - May 2015\nCornell University, Ithaca, NY\nB.S in Environmental Science | Aug 2008 - May 2013\n\n\n\nBank of America | Global Quantitative Summer Analyst | Jun 2022 - present\nGW Industry | Investment Analyst | July 2019 - June 2021\nShanghai Fosun High Technology Group | Investment Manager | Nov 2015 - June 2018"
+  },
+  {
+    "objectID": "index.html#education",
+    "href": "index.html#education",
+    "title": "About",
+    "section": "Education",
+    "text": "Education\nGeorgia Institute of Technology, Atlanta, GA\nM.S in Quantitative and Computational Finance | Aug 2021 - Dec 2022\nYale University, New Haven, CT\nM.S in Environmental Science | Aug 2013 - May 2015\nCornell University, Ithaca, NY\nB.S in Environmental Science | Aug 2008 - May 2013"
+  },
+  {
+    "objectID": "index.html#experience",
+    "href": "index.html#experience",
+    "title": "About",
+    "section": "Experience",
+    "text": "Experience\nBank of America | Global Quantitative Summer Analyst | Jun 2022 - present\nGW Industry | Investment Analyst | July 2019 - June 2021\nShanghai Fosun High Technology Group | Investment Manager | Nov 2015 - June 2018"
   }
 ]

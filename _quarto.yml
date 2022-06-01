@@ -17,7 +17,9 @@ website:
     collapse: false
     right:
       - icon: github
-        href: https://github.com/TJ-HOU/ESG_Resources/
+        href: https://github.com/TJ-HOU/ESG_Resources
+      - icon: linkedin
+        href: https://www.linkedin.com/in/tianjunhou
     left:
       - text: "Preprints"
         file: preprints.qmd

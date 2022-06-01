@@ -1,8 +1,35 @@
 ---
-title: "About"
+title: "Tianjun Hou"
 about: 
-  template: jolla
-  image: profile.jpeg
+  id: hero-heading
+  template: trestles
+  image: image.jpeg
 ---
 
-This is a website that hosts Environmental, Social, Governance (ESG) resources created by R studio and Quarto package.
+:::{#hero-heading}
+
+Tianjun Hou studies financial engineering and environmental science. She developed this website to host Environmental, Social, Governance (ESG) resources by R studio and Quarto package when she worked as a graduate assistant at Georgia Tech.
+
+# **Education**
+
+**Georgia Institute of Technology**, Atlanta, GA
+
+M.S in Quantitative and Computational Finance | Aug 2021 - Dec 2022
+
+**Yale University**, New Haven, CT
+
+M.S in Environmental Science | Aug 2013 - May 2015
+
+**Cornell University**, Ithaca, NY
+
+B.S in Environmental Science | Aug 2008 - May 2013
+
+# **Experience**
+
+**Bank of America** | Global Quantitative Summer Analyst | Jun 2022 - present
+
+**GW Industry** | Investment Analyst | July 2019 - June 2021
+
+**Shanghai Fosun High Technology Group** | Investment Manager | Nov 2015 - June 2018
+
+:::
