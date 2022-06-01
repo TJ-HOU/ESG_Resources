@@ -58,7 +58,7 @@ library(DT)
 library(tidyverse)
 youtube<-py$df
 ### the hyperlink doesn't work on website, need to fix it ###
-youtube$Title<-paste0("<a href='",youtube$link,"'>",youtube$title,"</a>")
+youtube$Title<-paste0("<a href=",youtube$link,">",youtube$title,"</a>")
 youtube_select<-youtube%>%select(Title,channel,views,time_published)
 colnames(youtube_select) <- c("Title","Channel","Time_published","Views")
 datatable(youtube_select, options = list(pageLength = 10),escape=FALSE, class = 'cell-border stripe')
